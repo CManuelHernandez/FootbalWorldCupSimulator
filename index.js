@@ -6,6 +6,12 @@ import LeagueWC from './classes/LeagueStage.js';
 
 const groups = new LeagueWC ('Group A', grupoA);
 
-for (const team of groups.teams) {
-    console.log(team);
-}
+const teamNames = groups.teams.map(team => team.name);
+
+// teamNames.forEach(function(equipo) {
+//     console.log(equipo)
+// })
+
+groups.scheduleMatchDays()
+
+console.log(groups.matchDaySchedule)

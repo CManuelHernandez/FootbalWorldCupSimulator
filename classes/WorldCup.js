@@ -4,9 +4,8 @@ export default class WorldCup {
         this.name = name;
         this.teams = teams;
         this.rounds = rounds;
-        this.setupTeams(teams)
-        this.matchDaySchedule = [];
-    }
+        this.setupTeams(teams);
+    };
 
     setupTeams(teamNames) {
         this.teams = []
@@ -16,9 +15,11 @@ export default class WorldCup {
                 matchesWon: 0,
                 matchesDrawn: 0,
                 matchesLost: 0
-            }
+            };
             this.teams.push(team);
-        }
-    }
+        };
+    };
+
+    
 
 }
