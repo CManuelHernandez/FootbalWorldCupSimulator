@@ -1,0 +1,20 @@
+{
+  "name": "footbalworldcupsimulator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CManuelHernandez/FootbalWorldCupSimulator.git"
+  },
+  "author": "Manuel Hernández",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/CManuelHernandez/FootbalWorldCupSimulator/issues"
+  },
+  "homepage": "https://github.com/CManuelHernandez/FootbalWorldCupSimulator#readme"
+}
