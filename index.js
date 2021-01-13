@@ -8,9 +8,9 @@ const groups = new LeagueWC ('Group A', grupoA);
 
 const teamNames = groups.teams.map(team => team.name);
 
-// teamNames.forEach(function(equipo) {
-//     console.log(equipo)
-// })
+teamNames.forEach(function(equipo) {
+    console.log(equipo)
+})
 
 groups.scheduleMatchDays()
 
