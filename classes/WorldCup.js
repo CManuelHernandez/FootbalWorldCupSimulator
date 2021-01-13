@@ -24,11 +24,15 @@ export default class WorldCup {
         for (const matchDay of this.matchDaySchedule) {
             for (const match of matchDay) {
                 const result = this.play(match);
-                console.log('Resultado', result);
+                this.updateTeams(result);  // actualizamos los equipos con el resultado de partido
             };
             console.log('Calcular clasificación');
             console.log('Guardar resumen de la jornada');
         }
+    }
+
+    updateTeams(result) {
+        throw new Error('updateTeams method not implemented')
     }
 
     play(match) {

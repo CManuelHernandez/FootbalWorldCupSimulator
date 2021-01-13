@@ -95,24 +95,35 @@ export default class LeagueWC extends WorldCup {
             } else { // jornada impar -> juega fuera
                 firstMatch[AWAY_TEAM] = lastTeamName;
             }
-            matchDayNumber++
+            matchDayNumber++;
         });
     };
 
     generateGoals() {
-        return Math.round(Math.random() * 10)
+        return Math.round(Math.random() * 10);
     }
 
     play(match) {
         const homeGoals = this.generateGoals();
         const awayGoals = this.generateGoals();
         return {
-            homeTeam: match[0],
+            homeTeam: match[LOCAL_TEAM],
             homeGoals,
-            awayTeam: match[1],
+            awayTeam: match[AWAY_TEAM],
             awayGoals
         };
     };
+
+    getTeamForName(name) {
+        return this.teams.find(team => team.name == name);
+    }
+
+    updateTeams(result) {
+        console.log('updateTeams', result);
+        const homeTeam = this.getTeamForName(result.homeTeam);
+        const awayTeam = this.getTeamForName(result.awayTeam);
+        console.log('TEAMS', homeTeam, awayTeam);
+    }
 
     scheduleMatchDays() {
         this.initSchedule();
