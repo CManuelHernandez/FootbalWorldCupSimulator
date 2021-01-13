@@ -1,35 +1,59 @@
-import { worldCupContenders , 
+import { worldCupContenders , groupsLetter,
     grupoA, grupoB, grupoC, grupoD, grupoE, grupoF, grupoG, grupoH} from './teams.js';
 import WorldCup from './classes/WorldCup.js';
 import LeagueWC from './classes/LeagueStage.js';
 
 
-const groups = new LeagueWC ('Group A', grupoA);
+const groups = [
+    new LeagueWC ('Group A', grupoA),
+    new LeagueWC ('Group B', grupoB),
+    new LeagueWC ('Group C', grupoC),
+    new LeagueWC ('Group D', grupoD),
+    new LeagueWC ('Group E', grupoE),
+    new LeagueWC ('Group F', grupoF),
+    new LeagueWC ('Group G', grupoG),
+    new LeagueWC ('Group H', grupoH),
+];
 
-const teamNames = groups.teams.map(team => team.name);
+let numerogrupo = 0;
+for (const group of groups) {
 
-teamNames.forEach(function(equipo) {
+    console.log(`GRUPO ${groupsLetter[numerogrupo]}`)
+    console.log('-----------------------')
+    const teamNames = group.getTeamNames();
+    teamNames.forEach(function(equipo) {
     console.log(equipo);
-})
+    });
+    console.log('');
 
-groups.scheduleMatchDays();
-
-let i = 1;
-groups.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
+    group.scheduleMatchDays();
+    group.start();
+    
+    let i = 1
+    group.matchDaySchedule.forEach(matchDay => {
+    console.log(`JORNADA ${i} del grupo ${groupsLetter[numerogrupo]}`)
     matchDay.forEach(match => {
-        console.log(match.join(' vs '));
+        const home = match[0];
+        const away = match[1];
+        console.log(`${home} vs ${away}`)
     })
-    i++;
-});
+    i++
+    console.log('');
+    }); 
+    numerogrupo++;
+}
 
-// Comenzamos la liga
-groups.start();
+console.log('===============================================');
+console.log('============== COMIENZA EL MUNDIAL ============');
+console.log('===============================================');
+console.log('');
 
-// mostrar por pantalla los resultados de cada jornada y la clasificación
-i = 1
-groups.summaries.forEach(summary => {
-    console.log(`RESUMEN JORNADA ${i}`)
+numerogrupo = 0;
+for (const group of groups) {
+    // mostrar por pantalla los resultados de cada jornada y la clasificación
+    let i = 1
+    group.summaries.forEach(summary => {
+    console.log(`RESULTADO JORNADA ${i} del grupo ${groupsLetter[numerogrupo]}`)
     summary.results.forEach(result => {
         console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam}`)
     })
@@ -45,6 +69,8 @@ groups.summaries.forEach(summary => {
             GoalsAgainst: team.goalsAgainst,
             GoalsDiff: team.goalsFor - team.goalsAgainst
         }
-    }));
+    }))
     i++
 })
+numerogrupo++;     
+}

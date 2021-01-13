@@ -11,6 +11,8 @@ Array.prototype.shuffle = function()
 	return this;
 }
 
+export const groupsLetter = ["A","B","C","D","E","F","G","H"];
+
 const teams = ["Sudáfrica", "Australia", "Argelia", "Dinamarca",
                 "Alemania", "Corea del Norte", "Camerún", "Eslovaquia",
                 "Argentina", "Corea del Sur", "Costa de Marfil", "Eslovenia",
