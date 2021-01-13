@@ -5,6 +5,7 @@ export default class WorldCup {
         this.teams = teams;
         this.setup(config);
         this.setupTeams(teams);
+        this.summaries = [];
     };
 
     setup(config) {
@@ -15,7 +16,7 @@ export default class WorldCup {
     setupTeams(teamNames) {
         this.teams = [];
         for (const teamName of teamNames) {
-            const team = this.customizeTeam(teamName)
+            const team = this.customizeTeam(teamName);
             this.teams.push(team)
         }
     };
@@ -31,13 +32,25 @@ export default class WorldCup {
 
     start() {
         for (const matchDay of this.matchDaySchedule) {
+            const matchDaySummary = {
+                results: [],
+                standings: undefined
+            }
             for (const match of matchDay) {
                 const result = this.play(match);
                 this.updateTeams(result);  // actualizamos los equipos con el resultado de partido
+                matchDaySummary.results.push(result)
             };
-            console.log('Calcular clasificación');
-            console.log('Guardar resumen de la jornada');
+            // Calcular clasificación
+            this.getStandings()
+            matchDaySummary.standings = this.teams.map(team => Object.assign({}, team))
+            // Guardar resumen de la jornada
+            this.summaries.push(matchDaySummary)
         }
+    }
+
+    getStandings() {
+        throw new Error('getStandings not implemented')
     }
 
     updateTeams(result) {

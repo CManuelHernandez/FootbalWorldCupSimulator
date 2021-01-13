@@ -116,10 +116,9 @@ export default class LeagueWC extends WorldCup {
 
     getTeamForName(name) {
         return this.teams.find(team => team.name == name);
-    }
+    };
 
     updateTeams(result) {
-        console.log('updateTeams', result);
         // buscar el equipo por su nombre en el array de equipos
         const homeTeam = this.getTeamForName(result.homeTeam);
         const awayTeam = this.getTeamForName(result.awayTeam);
@@ -147,8 +146,27 @@ export default class LeagueWC extends WorldCup {
                 awayTeam.matchesDrawn += 1;
             }
         }
-        console.log('TEAMS', homeTeam, awayTeam);
-    }
+    };
+
+    getStandings() {
+        this.teams.sort(function(teamA, teamB) {
+            if (teamA.points > teamB.points) {
+                return -1;
+            } else if (teamA.points < teamB.points) {
+                return 1;
+            } else { // empatan a puntosç
+               const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst;
+               const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst;
+               if (goalsDiffA > goalsDiffB) {
+                   return -1;
+               } else if (goalsDiffA < goalsDiffB) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+            }
+        })
+    };
 
     scheduleMatchDays() {
         this.initSchedule();
