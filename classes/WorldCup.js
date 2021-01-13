@@ -20,6 +20,19 @@ export default class WorldCup {
         };
     };
 
-    
+    start() {
+        for (const matchDay of this.matchDaySchedule) {
+            for (const match of matchDay) {
+                const result = this.play(match);
+                console.log('Resultado', result);
+            };
+            console.log('Calcular clasificación');
+            console.log('Guardar resumen de la jornada');
+        }
+    }
+
+    play(match) {
+        throw new Error('play method not implented')
+    }  
 
 }

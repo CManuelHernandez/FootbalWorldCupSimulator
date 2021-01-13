@@ -99,6 +99,21 @@ export default class LeagueWC extends WorldCup {
         });
     };
 
+    generateGoals() {
+        return Math.round(Math.random() * 10)
+    }
+
+    play(match) {
+        const homeGoals = this.generateGoals();
+        const awayGoals = this.generateGoals();
+        return {
+            homeTeam: match[0],
+            homeGoals,
+            awayTeam: match[1],
+            awayGoals
+        };
+    };
+
     scheduleMatchDays() {
         this.initSchedule();
         this.setLocalTeams();

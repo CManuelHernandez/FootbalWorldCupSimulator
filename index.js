@@ -21,4 +21,7 @@ groups.matchDaySchedule.forEach(matchDay => {
         console.log(match.join(' vs '));
     })
     i++;
-})
+});
+
+// Comenzamos la liga
+groups.start();
