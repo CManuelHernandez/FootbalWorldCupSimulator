@@ -9,9 +9,16 @@ const groups = new LeagueWC ('Group A', grupoA);
 const teamNames = groups.teams.map(team => team.name);
 
 teamNames.forEach(function(equipo) {
-    console.log(equipo)
+    console.log(equipo);
 })
 
-groups.scheduleMatchDays()
+groups.scheduleMatchDays();
 
-console.log(groups.matchDaySchedule)
+let i = 1;
+groups.matchDaySchedule.forEach(matchDay => {
+    console.log(`JORNADA ${i}`)
+    matchDay.forEach(match => {
+        console.log(match.join(' vs '));
+    })
+    i++;
+})
