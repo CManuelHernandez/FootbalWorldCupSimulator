@@ -22,7 +22,7 @@ export default class LeagueWC extends WorldCup {
     customizeTeam(teamName) {
         const customizedTeam = super.customizeTeam(teamName);
         return {
-            goints: 0,
+            points: 0,
             goalsFor: 0,
             goalsAgainst: 0,
             ...customizedTeam
@@ -120,8 +120,33 @@ export default class LeagueWC extends WorldCup {
 
     updateTeams(result) {
         console.log('updateTeams', result);
+        // buscar el equipo por su nombre en el array de equipos
         const homeTeam = this.getTeamForName(result.homeTeam);
         const awayTeam = this.getTeamForName(result.awayTeam);
+        if (homeTeam && awayTeam) { // si ecuentra ambos equipos
+
+            homeTeam.goalsFor += result.homeGoals;
+            homeTeam.goalsAgainst += result.awayGoals;
+            awayTeam.goalsFor += result.awayGoals;
+            awayTeam.goalsAgainst += result.homeGoals;
+
+            if (result.homeGoals > result.awayGoals) { // gana equipo local
+                homeTeam.points += this.config.pointsPerWin;
+                homeTeam.matchesWon += 1;
+                awayTeam.points += this.config.pointsPerLose;
+                awayTeam.matchesLost += 1;
+            } else if (result.homeGoals < result.awayGoals) { // gana equipo visitante
+                homeTeam.points += this.config.pointsPerLose;
+                homeTeam.matchesLost += 1;
+                awayTeam.points += this.config.pointsPerWin;
+                awayTeam.matchesWon += 1;
+            } else { // empate
+                homeTeam.points += this.config.pointsPerDraw;
+                homeTeam.matchesDrawn += 1;
+                awayTeam.points += this.config.pointsPerDraw;
+                awayTeam.matchesDrawn += 1;
+            }
+        }
         console.log('TEAMS', homeTeam, awayTeam);
     }
 
