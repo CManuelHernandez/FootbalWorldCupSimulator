@@ -39,17 +39,38 @@ export default class WorldCup {
             for (const match of matchDay) {
                 const result = this.play(match);
                 this.updateTeams(result);  // actualizamos los equipos con el resultado de partido
-                matchDaySummary.results.push(result)
+                matchDaySummary.results.push(result);
             };
             // Calcular clasificación
             this.getStandings()
-            matchDaySummary.standings = this.teams.map(team => Object.assign({}, team))
+            matchDaySummary.standings = this.teams.map(team => Object.assign({}, team));
             // Guardar resumen de la jornada
-            this.summaries.push(matchDaySummary)
+            this.summaries.push(matchDaySummary);
+        }
+    }
+
+    startPlayOff() {
+        for (const matchDay of this.playOffDaySchedule) {
+            const playOffDaySummary = {
+                results: [],
+                standings: undefined
+            }
+            for (const match of matchDay) {
+                const result = this.playPlayOff(match);
+                this.updatePlayOffsTeams(result);
+                playOffDaySummary.results.push(result);
+            }
+            this.getPlayOffStandings();
+            playOffDaySummary.standings = this.teams.map(team => Object.assign({}, team));
+            this.summaries.push(playOffDaySummary);
         }
     }
 
     getStandings() {
+        throw new Error('getStandings not implemented')
+    }
+
+    getPlayOffStandings() {
         throw new Error('getStandings not implemented')
     }
 

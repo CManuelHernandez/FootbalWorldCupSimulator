@@ -98,13 +98,60 @@ for (let i = 0; i < cualifayedTeamsAsFirst.length; i++){
 }
 
 const playOffsClassified = [...roundOfSixteenLeft, ...roundOfSixteenRight];
-let playOffs = [];
+const playOffs = playOffsClassified.map(team => team.name);;
 
-playOffs = playOffsClassified.map(team => team.name);
-console.log(playOffs);
+// console.log(playOffs);
 
-const groupsplayOffs = new PlayOffWC ('PlayOff', playOffs );
+const roundOfSixteenOne = playOffs.slice(0,2);
+const roundOfSixteenTwo = playOffs.slice(2,4);
+const roundOfSixteenThree = playOffs.slice(4,6);
+const roundOfSixteenFour = playOffs.slice(6,8);
+const roundOfSixteenFive = playOffs.slice(8,10);
+const roundOfSixteenSix = playOffs.slice(10,12);
+const roundOfSixteenSeven = playOffs.slice(12,14);
+const roundOfSixteenEight = playOffs.slice(14,16);
 
-for (const team of groupsplayOffs.teams) {
-    console.log(team)
+const classifiedTeams = [
+    new PlayOffWC ('First Round of Sixteen', roundOfSixteenOne),
+    new PlayOffWC ('Second Round of Sixteen', roundOfSixteenTwo),
+    new PlayOffWC ('Third Round of Sixteen', roundOfSixteenThree),
+    new PlayOffWC ('Fourth Round of Sixteen', roundOfSixteenFour),
+    new PlayOffWC ('Fifth Round of Sixteen', roundOfSixteenFive),
+    new PlayOffWC ('Sixth Round of Sixteen', roundOfSixteenSix),
+    new PlayOffWC ('Seventh Round of Sixteen', roundOfSixteenSeven),
+    new PlayOffWC ('Eighth Round of Sixteen', roundOfSixteenEight),
+];
+
+console.log('============== OCTAVOS DE FINAL ============');
+
+for (const classified of classifiedTeams) {
+
+    classified.PlayOffSchedule();
+    // console.log(classified.playOffDaySchedule);
+    // classified.playOffDaySchedule.forEach(matchDay => {
+    //     matchDay.forEach(match => {
+    //         console.log(match.join(' vs '))
+    //     });    
+    // });
+
+    classified.startPlayOff();   
 }
+
+const quarterFinals = []; // Almacenamos ganadores de Octavos
+
+for (const classified of classifiedTeams) {
+    // mostrar por pantalla los resultados de cada jornada y la clasificación
+    classified.summaries.forEach(summary => {
+    summary.results.forEach(result => {
+        if(result.homeGoals > result.awayGoals){
+            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
+        }else{
+            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
+        }
+        quarterFinals.push(classified.teams[0]);
+    })
+})
+}
+
+console.log('============== CUARTOS DE FINAL ============');
+console.log(quarterFinals);
