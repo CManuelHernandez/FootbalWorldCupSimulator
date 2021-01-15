@@ -229,3 +229,66 @@ for (const classified of topFourTeams) {
     })
 })
 }
+
+console.log('============== TERCER Y CUARTO PUESTO ============');
+
+const honorFinalTeams = honorFinal.map(team => team.name);
+
+// const honorFinals = honorFinalTeams.slice(0,2);
+
+const honorFinalist = [
+    new PlayOffWC ('First SemiFinal', honorFinalTeams)
+];
+
+for (const classified of honorFinalist) {
+    classified.PlayOffSchedule();
+    classified.startPlayOff();   
+}
+
+for (const classified of honorFinalist) {
+    // mostrar por pantalla los resultados de cada jornada y la clasificación
+    classified.summaries.forEach(summary => {
+    summary.results.forEach(result => {
+        if(result.homeGoals > result.awayGoals){
+            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
+        }else{
+            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
+        }
+    })
+})
+}
+
+console.log('============== FINAL ============');
+
+const finalTeams = final.map(team => team.name);
+
+// const honorFinals = honorFinalTeams.slice(0,2);
+
+const finalist = [
+    new PlayOffWC ('First SemiFinal', finalTeams)
+];
+
+for (const classified of finalist) {
+    classified.PlayOffSchedule();
+    classified.startPlayOff();   
+}
+
+for (const classified of finalist) {
+    // mostrar por pantalla los resultados de cada jornada y la clasificación
+    classified.summaries.forEach(summary => {
+    summary.results.forEach(result => {
+        if(result.homeGoals > result.awayGoals){
+            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
+            console.log('===============================================');
+            console.log(`¡${result.homeTeam} campeón del mundo!`);
+            console.log('===============================================');
+        }else{
+            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`); 
+            console.log('===============================================');
+            console.log(`¡${result.awayTeam} campeón del mundo!`);
+            console.log('===============================================');           
+        }
+    })
+})
+
+}
