@@ -2,6 +2,7 @@ import { worldCupContenders , groupsLetter,
     grupoA, grupoB, grupoC, grupoD, grupoE, grupoF, grupoG, grupoH} from './teams.js';
 import WorldCup from './classes/WorldCup.js';
 import LeagueWC from './classes/LeagueStage.js';
+import PlayOffWC from './classes/PlayOffStage.js';
 
 
 const groups = [
@@ -48,6 +49,9 @@ console.log('============== COMIENZA EL MUNDIAL ============');
 console.log('===============================================');
 console.log('');
 
+const cualifayedTeamsAsFirst = []; //Almacena los primeros de cada grupo al final de la fase de grupos
+const cualifayedTeamsAsSecond = []; //Almacena los segundos de cada grupo al final de la fase de grupos
+
 numerogrupo = 0;
 for (const group of groups) {
     // mostrar por pantalla los resultados de cada jornada y la clasificación
@@ -70,7 +74,37 @@ for (const group of groups) {
             GoalsDiff: team.goalsFor - team.goalsAgainst
         }
     }))
-    i++
+    i++;
 })
-numerogrupo++;     
+numerogrupo++;
+
+cualifayedTeamsAsFirst.push(group.teams[0]);
+cualifayedTeamsAsSecond.push(group.teams[1]);
+
+}
+
+const roundOfSixteenLeft = [];
+const roundOfSixteenRight = [];
+
+for (let i = 0; i < cualifayedTeamsAsFirst.length; i++){
+    // Evitamos que se crucen hasta la final equipos clasificados del mismo grupo
+    if (i % 2 == 0 ){
+        roundOfSixteenLeft.push(cualifayedTeamsAsFirst[i]);
+        roundOfSixteenRight.push(cualifayedTeamsAsSecond[i]);
+    } else {
+        roundOfSixteenRight.push(cualifayedTeamsAsFirst[i]);
+        roundOfSixteenLeft.push(cualifayedTeamsAsSecond[i]);
+    }
+}
+
+const playOffsClassified = [...roundOfSixteenLeft, ...roundOfSixteenRight];
+let playOffs = [];
+
+playOffs = playOffsClassified.map(team => team.name);
+console.log(playOffs);
+
+const groupsplayOffs = new PlayOffWC ('PlayOff', playOffs );
+
+for (const team of groupsplayOffs.teams) {
+    console.log(team)
 }
