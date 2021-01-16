@@ -15,6 +15,7 @@ export const LOCAL_TEAM = 0;
 export const AWAY_TEAM = 1;
 
 export const groupsLetter = ["A","B","C","D","E","F","G","H"];
+export const stages = ["OCTAVOS DE FINAL","CUARTOS DE FINAL","SEMIFINALES","TERCER Y CUARTO PUESTO","FINAL"];
 
 const teams = ["Sudáfrica", "Australia", "Argelia", "Dinamarca",
                 "Alemania", "Corea del Norte", "Camerún", "Eslovaquia",

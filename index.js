@@ -1,8 +1,9 @@
-import { groupsLetter,
+import { groupsLetter, stages,
     grupoA, grupoB, grupoC, grupoD, grupoE, grupoF, grupoG, grupoH} from './teams.js';
 import LeagueWC from './classes/LeagueStage.js';
 import PlayOffWC from './classes/PlayOffStage.js';
 
+let winnerTeams = []; // Almacenamos ganadores de Octavos
 
 const groups = [
     new LeagueWC ('Group A', grupoA),
@@ -97,186 +98,167 @@ for (let i = 0; i < cualifayedTeamsAsFirst.length; i++){
 }
 
 const playOffsClassified = [...roundOfSixteenLeft, ...roundOfSixteenRight];
-const playOffs = playOffsClassified.map(team => team.name);;
+const playOffs = playOffsClassified.map(team => team.name);
 
 // console.log(playOffs);
 
-const roundOfSixteenOne = playOffs.slice(0,2);
-const roundOfSixteenTwo = playOffs.slice(2,4);
-const roundOfSixteenThree = playOffs.slice(4,6);
-const roundOfSixteenFour = playOffs.slice(6,8);
-const roundOfSixteenFive = playOffs.slice(8,10);
-const roundOfSixteenSix = playOffs.slice(10,12);
-const roundOfSixteenSeven = playOffs.slice(12,14);
-const roundOfSixteenEight = playOffs.slice(14,16);
+let classifiedTeams = [];
+const roundGame =['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth'];
+let classifiedTeamsRound = [];
 
-const classifiedTeams = [
-    new PlayOffWC ('First Round of Sixteen', roundOfSixteenOne),
-    new PlayOffWC ('Second Round of Sixteen', roundOfSixteenTwo),
-    new PlayOffWC ('Third Round of Sixteen', roundOfSixteenThree),
-    new PlayOffWC ('Fourth Round of Sixteen', roundOfSixteenFour),
-    new PlayOffWC ('Fifth Round of Sixteen', roundOfSixteenFive),
-    new PlayOffWC ('Sixth Round of Sixteen', roundOfSixteenSix),
-    new PlayOffWC ('Seventh Round of Sixteen', roundOfSixteenSeven),
-    new PlayOffWC ('Eighth Round of Sixteen', roundOfSixteenEight),
-];
+for (let i=0; i<playOffs.length; i+=2){
+    const playOffsMatch = playOffs.slice(i,i+2);
+    classifiedTeams.push(playOffsMatch);
+}
+
+classifiedTeams.forEach((teamPlayOff, index) => {
+    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
+})
 
 console.log('============== OCTAVOS DE FINAL ============');
 
-for (const classified of classifiedTeams) {
 
+for (const classified of classifiedTeamsRound) {
     classified.scheduleMatchDays();
     classified.startPlayOff();   
 }
+printTeams(classifiedTeamsRound);
 
-const quarterFinals = []; // Almacenamos ganadores de Octavos
-
-for (const classified of classifiedTeams) {
-    // mostrar por pantalla los resultados de cada jornada y la clasificación
-    classified.summaries.forEach(summary => {
-    summary.results.forEach(result => {
-        if(result.homeGoals > result.awayGoals){
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
-        }else{
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
-        }
-        quarterFinals.push(classified.teams[0]);
+function printTeams(teams, final=false){
+    for (const classified of teams) {
+        // mostrar por pantalla los resultados de cada jornada y la clasificación
+        classified.summaries.forEach(summary => {
+        summary.results.forEach(result => {
+            if(result.homeGoals > result.awayGoals){
+                console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
+                if(final){
+                    console.log(`===============================================\n¡${result.homeTeam} campeón del mundo!\n===============================================`);
+                }
+            }else{
+                console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);
+                if(final){
+                    console.log(`===============================================\n¡${result.awayTeam} campeón del mundo!\n===============================================`);              
+                } 
+            }
+            winnerTeams.push(classified.teams[0]);
+        })
     })
-})
+    }
 }
 
 console.log('============== CUARTOS DE FINAL ============');
 
+const quarterFinalsTeams = winnerTeams.map(team => team.name);
+classifiedTeams = [];
+classifiedTeamsRound = [];
+winnerTeams = [];
 
-const quarterFinalsTeams = quarterFinals.map(team => team.name);
+for (let i=0; i<quarterFinalsTeams.length; i+=2){
+    const playOffsMatch = quarterFinalsTeams.slice(i,i+2);
+    classifiedTeams.push(playOffsMatch);
+}
 
-const quarterFinalsnOne = quarterFinalsTeams.slice(0,2);
-const quarterFinalsTwo = quarterFinalsTeams.slice(2,4);
-const quarterFinalsThree = quarterFinalsTeams.slice(4,6);
-const quarterFinalsFour = quarterFinalsTeams.slice(6,8);
+classifiedTeams.forEach((teamPlayOff, index) => {
+    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
+})
 
 
-const topEightTeams = [
-    new PlayOffWC ('First QuarterFinal', quarterFinalsnOne),
-    new PlayOffWC ('Second QuarterFinal', quarterFinalsTwo),
-    new PlayOffWC ('Third QuarterFinal', quarterFinalsThree),
-    new PlayOffWC ('Fourth QuarterFinal', quarterFinalsFour)
-];
-
-for (const classified of topEightTeams) {
+for (const classified of classifiedTeamsRound) {
     classified.scheduleMatchDays();
     classified.startPlayOff();   
-   
 }
 
-const semiFinals = []; // Almacenamos ganadores de Cuartos
+printTeams(classifiedTeamsRound);
 
-for (const classified of topEightTeams) {
-    // mostrar por pantalla los resultados de cada jornada y la clasificación
-    classified.summaries.forEach(summary => {
-    summary.results.forEach(result => {
-        if(result.homeGoals > result.awayGoals){
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
-        }else{
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
-        }
-        semiFinals.push(classified.teams[0]);
-    })
-})
-}
 
 
 console.log('============== SEMIFINALES ============');
 
-const semiFinalsTeams = semiFinals.map(team => team.name);
+const semiFinalsTeams = winnerTeams.map(team => team.name);
+classifiedTeams = [];
+classifiedTeamsRound = [];
+winnerTeams = []
 
-const semiFinalsnOne = semiFinalsTeams.slice(0,2);
-const semiFinalsTwo = semiFinalsTeams.slice(2,4);
+for (let i=0; i<semiFinalsTeams.length; i+=2){
+    const playOffsMatch = semiFinalsTeams.slice(i,i+2);
+    classifiedTeams.push(playOffsMatch);
+}
 
-const topFourTeams = [
-    new PlayOffWC ('First SemiFinal', semiFinalsnOne),
-    new PlayOffWC ('Second SemiFinal', semiFinalsTwo),
-];
+classifiedTeams.forEach((teamPlayOff, index) => {
+    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
+})
 
-for (const classified of topFourTeams) {
+for (const classified of classifiedTeamsRound) {
     classified.scheduleMatchDays();
     classified.startPlayOff();   
 }
 
-const final = []; // Almacenamos ganadores de Semis
-const honorFinal = []; // Almacenamos perdedores de Semis
+printTeams(classifiedTeamsRound);
 
-for (const classified of topFourTeams) {
-    // mostrar por pantalla los resultados de cada jornada y la clasificación
-    classified.summaries.forEach(summary => {
-    summary.results.forEach(result => {
-        if(result.homeGoals > result.awayGoals){
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
-        }else{
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
-        }
-        final.push(classified.teams[0]);
-        honorFinal.push(classified.teams[1]);
-    })
-})
-}
+// const honorFinal = []; // Almacenamos perdedores de Semis
 
-console.log('============== TERCER Y CUARTO PUESTO ============');
+// for (const classified of topFourTeams) {
+//     // mostrar por pantalla los resultados de cada jornada y la clasificación
+//     classified.summaries.forEach(summary => {
+//     summary.results.forEach(result => {
+//         if(result.homeGoals > result.awayGoals){
+//             console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
+//         }else{
+//             console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
+//         }
+//         final.push(classified.teams[0]);
+//         honorFinal.push(classified.teams[1]);
+//     })
+// })
+// }
 
-const honorFinalTeams = honorFinal.map(team => team.name);
+// console.log('============== TERCER Y CUARTO PUESTO ============');
+
+// const honorFinalTeams = honorFinal.map(team => team.name);
 
 
-const honorFinalist = [
-    new PlayOffWC ('First SemiFinal', honorFinalTeams)
-];
+// const honorFinalist = [
+//     new PlayOffWC ('First SemiFinal', honorFinalTeams)
+// ];
 
-for (const classified of honorFinalist) {
-    classified.scheduleMatchDays();
-    classified.startPlayOff();   
-}
+// for (const classified of honorFinalist) {
+//     classified.scheduleMatchDays();
+//     classified.startPlayOff();   
+// }
 
-for (const classified of honorFinalist) {
-    // mostrar por pantalla los resultados de cada jornada y la clasificación
-    classified.summaries.forEach(summary => {
-    summary.results.forEach(result => {
-        if(result.homeGoals > result.awayGoals){
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
-        }else{
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
-        }
-    })
-})
-}
+// for (const classified of honorFinalist) {
+//     // mostrar por pantalla los resultados de cada jornada y la clasificación
+//     classified.summaries.forEach(summary => {
+//     summary.results.forEach(result => {
+//         if(result.homeGoals > result.awayGoals){
+//             console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
+//         }else{
+//             console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);            
+//         }
+//     })
+// })
+// }
 
 console.log('============== FINAL ============');
 
-const finalTeams = final.map(team => team.name);
+const finalTeams = winnerTeams.map(team => team.name);
+classifiedTeams = [];
+classifiedTeamsRound = [];
+winnerTeams = [];
 
-const finalist = [
-    new PlayOffWC ('First SemiFinal', finalTeams)
-];
+for (let i=0; i<finalTeams.length; i+=2){
+    const playOffsMatch = finalTeams.slice(i,i+2);
+    classifiedTeams.push(playOffsMatch);
+}
 
-for (const classified of finalist) {
+classifiedTeams.forEach((teamPlayOff, index) => {
+    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
+})
+
+for (const classified of classifiedTeamsRound) {
     classified.scheduleMatchDays();
     classified.startPlayOff();   
 }
 
-for (const classified of finalist) {
-    // mostrar por pantalla los resultados de cada jornada y la clasificación
-    classified.summaries.forEach(summary => {
-    summary.results.forEach(result => {
-        if(result.homeGoals > result.awayGoals){
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
-            console.log('===============================================');
-            console.log(`¡${result.homeTeam} campeón del mundo!`);
-            console.log('===============================================');
-        }else{
-            console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`); 
-            console.log('===============================================');
-            console.log(`¡${result.awayTeam} campeón del mundo!`);
-            console.log('===============================================');           
-        }
-    })
-})
+printTeams(classifiedTeamsRound, true);
 
-}
