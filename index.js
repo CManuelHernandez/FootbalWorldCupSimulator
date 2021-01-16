@@ -3,7 +3,13 @@ import { groupsLetter, stages,
 import LeagueWC from './classes/LeagueStage.js';
 import PlayOffWC from './classes/PlayOffStage.js';
 
-let winnerTeams = []; // Almacenamos ganadores de Octavos
+let winnerTeams = []; // Almacenamos ganadores de Rondas
+let honorFinalTeams = [];
+const RoundType = {
+    final: 'final',
+    semiFinal: 'semiFinal',
+    playOff: 'palyOff'
+}
 
 const groups = [
     new LeagueWC ('Group A', grupoA),
@@ -124,23 +130,26 @@ for (const classified of classifiedTeamsRound) {
 }
 printTeams(classifiedTeamsRound);
 
-function printTeams(teams, final=false){
+function printTeams(teams, roundType = RoundType.playOffs){
     for (const classified of teams) {
         // mostrar por pantalla los resultados de cada jornada y la clasificación
         classified.summaries.forEach(summary => {
         summary.results.forEach(result => {
             if(result.homeGoals > result.awayGoals){
                 console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.homeTeam}`);
-                if(final){
+                if(roundType == RoundType.final){
                     console.log(`===============================================\n¡${result.homeTeam} campeón del mundo!\n===============================================`);
                 }
             }else{
                 console.log(`${result.homeTeam} ${result.homeGoals} - ${result.awayGoals} ${result.awayTeam} => ${result.awayTeam}`);
-                if(final){
+                if(roundType == RoundType.final){
                     console.log(`===============================================\n¡${result.awayTeam} campeón del mundo!\n===============================================`);              
                 } 
             }
             winnerTeams.push(classified.teams[0]);
+            if(roundType == RoundType.honorFinal){
+                honorFinalTeams.push(classified.teams[1]);
+            }
         })
     })
     }
@@ -193,7 +202,7 @@ for (const classified of classifiedTeamsRound) {
     classified.startPlayOff();   
 }
 
-printTeams(classifiedTeamsRound);
+printTeams(classifiedTeamsRound, RoundType.semiFinal);
 
 // const honorFinal = []; // Almacenamos perdedores de Semis
 
@@ -260,5 +269,5 @@ for (const classified of classifiedTeamsRound) {
     classified.startPlayOff();   
 }
 
-printTeams(classifiedTeamsRound, true);
+printTeams(classifiedTeamsRound, RoundType.final);
 
