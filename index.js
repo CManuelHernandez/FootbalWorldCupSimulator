@@ -7,6 +7,7 @@ let winnerTeams = []; // Almacenamos ganadores de Rondas
 let honorFinalTeams = [];
 const RoundType = {
     final: 'final',
+    honor: 'honor',
     semiFinal: 'semiFinal',
     playOff: 'palyOff'
 }
@@ -103,32 +104,11 @@ for (let i = 0; i < cualifayedTeamsAsFirst.length; i++){
     }
 }
 
-const playOffsClassified = [...roundOfSixteenLeft, ...roundOfSixteenRight];
-const playOffs = playOffsClassified.map(team => team.name);
-
-// console.log(playOffs);
+winnerTeams = [...roundOfSixteenLeft, ...roundOfSixteenRight];
 
 let classifiedTeams = [];
 const roundGame =['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth'];
 let classifiedTeamsRound = [];
-
-for (let i=0; i<playOffs.length; i+=2){
-    const playOffsMatch = playOffs.slice(i,i+2);
-    classifiedTeams.push(playOffsMatch);
-}
-
-classifiedTeams.forEach((teamPlayOff, index) => {
-    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
-})
-
-console.log('============== OCTAVOS DE FINAL ============');
-
-
-for (const classified of classifiedTeamsRound) {
-    classified.scheduleMatchDays();
-    classified.startPlayOff();   
-}
-printTeams(classifiedTeamsRound);
 
 function printTeams(teams, roundType = RoundType.playOffs){
     for (const classified of teams) {
@@ -155,95 +135,49 @@ function printTeams(teams, roundType = RoundType.playOffs){
     }
 }
 
-console.log('============== CUARTOS DE FINAL ============');
+function worldCupPlayOffs(){
+    stages.forEach((round, index) => {
+      console.log(`============== ${stages[index]} ============`);
 
-const quarterFinalsTeams = winnerTeams.map(team => team.name);
-classifiedTeams = [];
-classifiedTeamsRound = [];
-winnerTeams = [];
+      const nameTeams = index == 3 ? honorFinalTeams.map((team) => team.name) : winnerTeams.map((team) => team.name);
+      classifiedTeams = [];
+      classifiedTeamsRound = [];
+      if(index != 3) winnerTeams = [];
 
-for (let i=0; i<quarterFinalsTeams.length; i+=2){
-    const playOffsMatch = quarterFinalsTeams.slice(i,i+2);
-    classifiedTeams.push(playOffsMatch);
+      for (let i = 0; i < nameTeams.length; i += 2) {
+        const playOffsMatch = nameTeams.slice(i, i + 2);
+        classifiedTeams.push(playOffsMatch);
+      }
+
+      classifiedTeams.forEach((teamPlayOff, index) => {
+        classifiedTeamsRound.push(
+          new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff)
+        );
+      });
+
+      for (const classified of classifiedTeamsRound) {
+        classified.scheduleMatchDays();
+        classified.startPlayOff();
+      }
+      switch (index) {
+        case 2:
+          printTeams(classifiedTeamsRound, RoundType.semiFinal);
+          break;
+
+        case 3:
+            printTeams(classifiedTeamsRound, RoundType.honor);
+            break;
+
+        case 4:
+          printTeams(classifiedTeamsRound, RoundType.final);
+          break;
+
+        default:
+          printTeams(classifiedTeamsRound);
+      }
+    }); 
 }
+worldCupPlayOffs();
 
-classifiedTeams.forEach((teamPlayOff, index) => {
-    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
-})
-
-
-for (const classified of classifiedTeamsRound) {
-    classified.scheduleMatchDays();
-    classified.startPlayOff();   
-}
-
-printTeams(classifiedTeamsRound);
-
-console.log('============== SEMIFINALES ============');
-
-const semiFinalsTeams = winnerTeams.map(team => team.name);
-classifiedTeams = [];
-classifiedTeamsRound = [];
-winnerTeams = []
-
-for (let i=0; i<semiFinalsTeams.length; i+=2){
-    const playOffsMatch = semiFinalsTeams.slice(i,i+2);
-    classifiedTeams.push(playOffsMatch);
-}
-
-classifiedTeams.forEach((teamPlayOff, index) => {
-    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
-})
-
-for (const classified of classifiedTeamsRound) {
-    classified.scheduleMatchDays();
-    classified.startPlayOff();   
-}
-
-printTeams(classifiedTeamsRound, RoundType.semiFinal);
-
-
-console.log('============== TERCER Y CUARTO PUESTO ============');
-
-const honorFinal = honorFinalTeams.map(team => team.name);
-classifiedTeams = [];
-classifiedTeamsRound = [];
-
-for (let i=0; i<honorFinal.length; i+=2){
-    const playOffsMatch = honorFinal.slice(i,i+2);
-    classifiedTeams.push(playOffsMatch);
-}
-
-classifiedTeams.forEach((teamPlayOff, index) => {
-    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
-})
-
-for (const classified of classifiedTeamsRound) {
-    classified.scheduleMatchDays();
-    classified.startPlayOff();   
-}
-printTeams(classifiedTeamsRound);
-
-console.log('============== FINAL ============');
-
-const finalTeams = winnerTeams.map(team => team.name);
-classifiedTeams = [];
-classifiedTeamsRound = [];
-winnerTeams = [];
-
-for (let i=0; i<finalTeams.length; i+=2){
-    const playOffsMatch = finalTeams.slice(i,i+2);
-    classifiedTeams.push(playOffsMatch);
-}
-
-classifiedTeams.forEach((teamPlayOff, index) => {
-    classifiedTeamsRound.push(new PlayOffWC(`${roundGame[index]} Match`, teamPlayOff))
-})
-
-for (const classified of classifiedTeamsRound) {
-    classified.scheduleMatchDays();
-    classified.startPlayOff();   
-}
-printTeams(classifiedTeamsRound, RoundType.final);
 
 
