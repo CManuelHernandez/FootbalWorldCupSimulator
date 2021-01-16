@@ -1,6 +1,5 @@
-import { worldCupContenders , groupsLetter,
+import { groupsLetter,
     grupoA, grupoB, grupoC, grupoD, grupoE, grupoF, grupoG, grupoH} from './teams.js';
-import WorldCup from './classes/WorldCup.js';
 import LeagueWC from './classes/LeagueStage.js';
 import PlayOffWC from './classes/PlayOffStage.js';
 
@@ -55,7 +54,7 @@ const cualifayedTeamsAsSecond = []; //Almacena los segundos de cada grupo al fin
 numerogrupo = 0;
 for (const group of groups) {
     // mostrar por pantalla los resultados de cada jornada y la clasificación
-    let i = 1
+    let i = 1;
     group.summaries.forEach(summary => {
     console.log(`RESULTADO JORNADA ${i} del grupo ${groupsLetter[numerogrupo]}`)
     summary.results.forEach(result => {
@@ -127,13 +126,6 @@ console.log('============== OCTAVOS DE FINAL ============');
 for (const classified of classifiedTeams) {
 
     classified.PlayOffSchedule();
-    // console.log(classified.playOffDaySchedule);
-    // classified.playOffDaySchedule.forEach(matchDay => {
-    //     matchDay.forEach(match => {
-    //         console.log(match.join(' vs '))
-    //     });    
-    // });
-
     classified.startPlayOff();   
 }
 
@@ -154,7 +146,6 @@ for (const classified of classifiedTeams) {
 }
 
 console.log('============== CUARTOS DE FINAL ============');
-// console.log(quarterFinals);
 
 
 const quarterFinalsTeams = quarterFinals.map(team => team.name);
@@ -234,7 +225,6 @@ console.log('============== TERCER Y CUARTO PUESTO ============');
 
 const honorFinalTeams = honorFinal.map(team => team.name);
 
-// const honorFinals = honorFinalTeams.slice(0,2);
 
 const honorFinalist = [
     new PlayOffWC ('First SemiFinal', honorFinalTeams)
@@ -261,8 +251,6 @@ for (const classified of honorFinalist) {
 console.log('============== FINAL ============');
 
 const finalTeams = final.map(team => team.name);
-
-// const honorFinals = honorFinalTeams.slice(0,2);
 
 const finalist = [
     new PlayOffWC ('First SemiFinal', finalTeams)
