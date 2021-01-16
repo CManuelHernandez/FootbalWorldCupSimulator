@@ -125,7 +125,7 @@ console.log('============== OCTAVOS DE FINAL ============');
 
 for (const classified of classifiedTeams) {
 
-    classified.PlayOffSchedule();
+    classified.scheduleMatchDays();
     classified.startPlayOff();   
 }
 
@@ -164,7 +164,7 @@ const topEightTeams = [
 ];
 
 for (const classified of topEightTeams) {
-    classified.PlayOffSchedule();
+    classified.scheduleMatchDays();
     classified.startPlayOff();   
    
 }
@@ -199,7 +199,7 @@ const topFourTeams = [
 ];
 
 for (const classified of topFourTeams) {
-    classified.PlayOffSchedule();
+    classified.scheduleMatchDays();
     classified.startPlayOff();   
 }
 
@@ -231,7 +231,7 @@ const honorFinalist = [
 ];
 
 for (const classified of honorFinalist) {
-    classified.PlayOffSchedule();
+    classified.scheduleMatchDays();
     classified.startPlayOff();   
 }
 
@@ -257,7 +257,7 @@ const finalist = [
 ];
 
 for (const classified of finalist) {
-    classified.PlayOffSchedule();
+    classified.scheduleMatchDays();
     classified.startPlayOff();   
 }
 
