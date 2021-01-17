@@ -15,7 +15,8 @@ export const LOCAL_TEAM = 0;
 export const AWAY_TEAM = 1;
 
 export const groupsLetter = ["A","B","C","D","E","F","G","H"];
-export const stages = ["OCTAVOS DE FINAL","CUARTOS DE FINAL","SEMIFINALES","TERCER Y CUARTO PUESTO","FINAL"];
+export const stages       = ["OCTAVOS DE FINAL","CUARTOS DE FINAL","SEMIFINALES","TERCER Y CUARTO PUESTO","FINAL"];
+export const roundGame    = ['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth'];
 
 const teams = ["Sudáfrica", "Australia", "Argelia", "Dinamarca",
                 "Alemania", "Corea del Norte", "Camerún", "Eslovaquia",
@@ -25,7 +26,6 @@ const teams = ["Sudáfrica", "Australia", "Argelia", "Dinamarca",
                 "Inglaterra", "Honduras", "Chile", "Portugal",
                 "Italia", "México", "Paraguay", "Serbia",
                 "Páises Bajos", "Nueva Zelanda", "Uruguay", "Suiza"];
-export {teams as worldCupContenders}
 
 teams.shuffle();
 export const grupoA = teams.slice(0,4);

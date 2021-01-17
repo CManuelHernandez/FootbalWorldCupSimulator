@@ -3,11 +3,11 @@ import { LOCAL_TEAM, AWAY_TEAM } from '../teams.js';
 export default class WorldCup {
 
     constructor(name, teams=[], config={}) {
-        this.name = name;
-        this.teams = teams;
+        this.name      = name;
+        this.teams     = teams;
+        this.summaries = [];
         this.setup(config);
         this.setupTeams(teams);
-        this.summaries = [];
     };
 
     setup(config) {
